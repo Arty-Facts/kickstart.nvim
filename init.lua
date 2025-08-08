@@ -168,19 +168,16 @@ vim.o.scrolloff = 16
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+vim.opt.clipboard = 'unnamedplus'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>oq', vim.diagnostic.setloclist, { desc = '[O]pen diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>q', ':bd<CR>', { desc = '[Q]uit buffer' })
-vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save File' })
-vim.keymap.set('n', '<leader>wq', ':qw<CR>', { desc = 'Save and Exit' })
-vim.keymap.set('n', '<leader>Q', ':q<CR>', { desc = 'Exit' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -385,6 +382,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
