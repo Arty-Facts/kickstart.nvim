@@ -120,9 +120,15 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
+-- Move lines and selections up and down with Alt + Arrow keys
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
 -- Better indenting in visual mode
-vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
+vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Indent left and reselect" })
+vim.keymap.set("v", "<Tab>", ">gv", { desc = "Indent right and reselect" })
 
 -- Quick file navigation
 vim.keymap.set("n", "<leader>e", ":Explore<CR>", { desc = "Open file explorer" })
