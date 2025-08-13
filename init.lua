@@ -163,7 +163,7 @@ vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", "<Tab>", ">gv", { desc = "Indent right and reselect" })
 
 -- Quick file navigation
-vim.g.netrw_banner = 0           -- Hide the distracting banner
+-- vim.g.netrw_banner = 0           -- Hide the distracting banner
 vim.g.netrw_liststyle = 3        -- Set tree-style view as the default
 vim.g.netrw_browse_split = 0     -- Open in the same window, we will override this
 vim.g.netrw_winsize = 15         -- Set window size to in %
@@ -182,7 +182,28 @@ function ToggleNetrw()
   end
 end
 
-vim.keymap.set("n", "<leader>e", ToggleNetrw, { desc = "Toggle file explorer" })
+vim.keymap.set("n", "<leader>\\", ToggleNetrw, { desc = "Toggle file explorer" })
+function SetNetrwKeymaps()
+  -- Helper function to create buffer-local keymaps
+  local function bind(key, command, desc)
+    vim.keymap.set('n', key, command, { buffer = true, noremap = true, silent = true, desc = desc })
+  end
+  
+  bind('q', ':Lexplore!<CR>', 'Close file explorer')
+
+  bind('S', ':Ntree<CR>', 'Select root')
+end
+
+-- Autocommand to run our keymap function when we enter a netrw buffer
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'netrw',
+  callback = function()
+    -- Tell netrw to open files in the previous window when we press <CR>
+    -- vim.g.netrw_browse_split = 4
+    -- Apply our custom keybindings
+    SetNetrwKeymaps()
+  end
+})
 
 vim.keymap.set("n", "<leader>ff", ":find ", { desc = "Find file" })
 
