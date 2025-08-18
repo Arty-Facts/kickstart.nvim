@@ -1,167 +1,509 @@
---[[
+-- theme & transparency
+----  vim.cmd.colorscheme 'default'
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-What is Kickstart?
-
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
-
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
-
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
-      - https://learnxinyminutes.com/docs/lua/
-
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
-Kickstart Guide:
-
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
-
-    (If you already know the Neovim basics, you can skip this step.)
-
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
-
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
-
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
-
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
-
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
-
-   NOTE: Look for lines like this
-
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
-
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now! :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
+-- Basic settings
+vim.opt.number = true -- Line numbers
+vim.opt.relativenumber = true -- Relative line numbers
+vim.opt.cursorline = true -- Highlight current line
+vim.opt.wrap = false -- Don't wrap lines
+vim.opt.scrolloff = 10 -- Keep 10 lines above/below cursor
+vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+-- Indentation
+vim.opt.tabstop = 2 -- Tab width
+vim.opt.shiftwidth = 2 -- Indent width
+vim.opt.softtabstop = 2 -- Soft tab stop
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.smartindent = true -- Smart auto-indenting
+vim.opt.autoindent = true -- Copy indent from current line
 
--- Make line numbers default
-vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
-vim.o.relativenumber = true
+-- Search settings
+vim.opt.ignorecase = true -- Case insensitive search
+vim.opt.smartcase = true -- Case sensitive if uppercase in search
+vim.opt.hlsearch = true -- Don't highlight search results
+vim.opt.incsearch = true -- Show matches as you type
 
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+-- Visual settings
+vim.opt.termguicolors = true -- Enable 24-bit colors
+vim.opt.signcolumn = 'yes' -- Always show sign column
+vim.opt.colorcolumn = '120' -- Show column at 100 characters
+vim.opt.showmatch = true -- Highlight matching brackets
+vim.opt.matchtime = 2 -- How long to show matching bracket
+vim.opt.cmdheight = 1 -- Command line height
+vim.opt.completeopt = 'menuone,noinsert,noselect' -- Completion options
+vim.opt.showmode = false -- Don't show mode in command line
+vim.opt.pumheight = 10 -- Popup menu height
+vim.opt.pumblend = 10 -- Popup menu transparency
+vim.opt.winblend = 0 -- Floating window transparency
+vim.opt.conceallevel = 0 -- Don't hide markup
+vim.opt.concealcursor = '' -- Don't hide cursor line markup
+vim.opt.lazyredraw = true -- Don't redraw during macros
+vim.opt.synmaxcol = 300 -- Syntax highlighting limit
 
--- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+-- File handling
+vim.opt.backup = false -- Don't create backup files
+vim.opt.writebackup = false -- Don't create backup before writing
+vim.opt.swapfile = false -- Don't create swap files
+vim.opt.undofile = true -- Persistent undo
+vim.opt.undodir = vim.fn.expand '~/.vim/undodir' -- Undo directory
+vim.opt.updatetime = 300 -- Faster completion
+vim.opt.timeoutlen = 500 -- Key timeout duration
+vim.opt.ttimeoutlen = 0 -- Key code timeout
+vim.opt.autoread = true -- Auto reload files changed outside vim
+vim.opt.autowrite = false -- Don't auto save
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+-- Behavior settings
+vim.opt.hidden = true -- Allow hidden buffers
+vim.opt.errorbells = false -- No error bells
+vim.opt.backspace = 'indent,eol,start' -- Better backspace behavior
+vim.opt.autochdir = false -- Don't auto change directory
+vim.opt.iskeyword:append '-' -- Treat dash as part of word
+vim.opt.path:append '**' -- include subdirectories in search
+vim.opt.selection = 'exclusive' -- Selection behavior
+vim.opt.mouse = 'a' -- Enable mouse support
+vim.opt.clipboard:append 'unnamedplus' -- Use system clipboard
+vim.opt.modifiable = true -- Allow buffer modifications
+vim.opt.encoding = 'UTF-8' -- Set encoding
+
+-- Cursor settings
+vim.opt.guicursor =
+  'n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
+
+-- Folding settings
+vim.opt.foldmethod = 'expr' -- Use expression for folding
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99 -- Start with all folds open
+
+-- Split behavior
+vim.opt.splitbelow = true -- Horizontal splits go below
+vim.opt.splitright = true -- Vertical splits go right
+
+-- Key mappings
+vim.g.mapleader = ' ' -- Set leader key to space
+vim.g.maplocalleader = ' ' -- Set local leader key (NEW)
+
+-- Normal mode mappings
+vim.keymap.set('n', '<leader>c', ':nohlsearch<CR>', { desc = 'Clear search highlights' })
+
+-- Center screen when jumping
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result (centered)' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result (centered)' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down (centered)' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up (centered)' })
+
+-- Delete without yanking
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yanking' })
+
+-- Buffer navigation
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprevious<CR>', { desc = 'Previous buffer' })
+
+function ListAndSelectBuffers()
+  -- Get a list of all listed buffers
+  local bufs = vim.fn.getbufinfo { buflisted = 1 }
+
+  -- Create a table to store buffer information for the selection UI
+  local buf_choices = {}
+  for _, buf in ipairs(bufs) do
+    table.insert(buf_choices, string.format('%d: %s', buf.bufnr, vim.fn.fnamemodify(buf.name, ':t')))
+  end
+
+  -- Use vim.ui.select to present the choices to the user
+  vim.ui.select(buf_choices, {
+    prompt = 'Select a buffer:',
+  }, function(choice)
+    if not choice then
+      return
+    end
+    -- Extract the buffer number from the choice string
+    local bufnr = tonumber(string.match(choice, '^%d+'))
+    if bufnr then
+      vim.api.nvim_set_current_buf(bufnr)
+    end
+  end)
+end
+
+-- Create a keymap to call the function
+vim.keymap.set('n', '<leader>bl', ListAndSelectBuffers, { desc = 'List and select buffers' })
+
+-- Better window navigation
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
+
+-- Better window navigation using arraows
+vim.keymap.set('n', '<C-Left>', '<C-w>h', { desc = 'Move to left window' })
+vim.keymap.set('n', '<C-Down>', '<C-w>j', { desc = 'Move to bottom window' })
+vim.keymap.set('n', '<C-Up>', '<C-w>k', { desc = 'Move to top window' })
+vim.keymap.set('n', '<C-Right>', '<C-w>l', { desc = 'Move to right window' })
+
+-- Splitting & Resizing
+vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Split window vertically' })
+vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Split window horizontally' })
+vim.keymap.set('n', '<S-Up>', ':resize +2<CR>', { desc = 'Increase window height' })
+vim.keymap.set('n', '<S-Down>', ':resize -2<CR>', { desc = 'Decrease window height' })
+vim.keymap.set('n', '<S-Left>', ':vertical resize -2<CR>', { desc = 'Decrease window width' })
+vim.keymap.set('n', '<S-Right>', ':vertical resize +2<CR>', { desc = 'Increase window width' })
+
+-- Move lines up/down
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
+
+-- Move lines and selections up and down with Alt + Arrow keys
+vim.keymap.set('n', '<A-Down>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-Up>', ':m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-Down>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', '<A-Up>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
+
+-- Better indenting in visual mode
+vim.keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent left and reselect' })
+vim.keymap.set('v', '<Tab>', '>gv', { desc = 'Indent right and reselect' })
+
+-- Quick file navigation
+-- vim.g.netrw_banner = 0           -- Hide the distracting banner
+vim.g.netrw_liststyle = 3 -- Set tree-style view as the default
+vim.g.netrw_browse_split = 0 -- Open in the same window, we will override this
+vim.g.netrw_winsize = 15 -- Set window size to in %
+
+-- Function to toggle the file explorer on the left
+function ToggleNetrw()
+  -- Check if a netrw buffer is open in the current tab
+  local netrw_win_id = vim.fn.bufwinnr '^netrw'
+
+  if netrw_win_id ~= -1 then
+    -- If netrw is open, close its window
+    vim.cmd 'Lexplore!'
+  else
+    -- If netrw is not open, open it on the left
+    vim.cmd 'Lexplore'
+  end
+end
+
+vim.keymap.set('n', '\\', ToggleNetrw, { desc = 'Toggle file explorer' })
+function SetNetrwKeymaps()
+  -- Helper function to create buffer-local keymaps
+  local function bind(key, command, desc)
+    vim.keymap.set('n', key, command, { buffer = true, noremap = true, silent = true, desc = desc })
+  end
+
+  bind('q', ':Lexplore!<CR>', 'Close file explorer')
+
+  bind('S', ':Ntree<CR>', 'Select root')
+end
+
+-- Autocommand to run our keymap function when we enter a netrw buffer
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'netrw',
+  callback = function()
+    -- Tell netrw to open files in the previous window when we press <CR>
+    -- vim.g.netrw_browse_split = 4
+    -- Apply our custom keybindings
+    SetNetrwKeymaps()
+  end,
+})
+
+vim.keymap.set('n', '<leader>ff', ':find ', { desc = 'Find file' })
+
+-- Better J behavior
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = ' lines and keep cursor position' })
+
+-- Quick config editing
+vim.keymap.set('n', '<leader>rc', ':e ~/.config/nvim/init.lua<CR>', { desc = 'Edit config' })
+
+-- ============================================================================
+-- USEFUL FUNCTIONS
+-- ============================================================================
+
+-- Copy Full File-Path
+vim.keymap.set('n', '<leader>pa', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  print('file:', path)
 end)
 
--- Enable break indent
-vim.o.breakindent = true
+-- Basic autocommands
+local augroup = vim.api.nvim_create_augroup('UserConfig', {})
 
--- Save undo history
-vim.o.undofile = true
+-- Highlight yanked text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = augroup,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = true
-vim.o.smartcase = true
+-- Return to last edit position when opening files
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = augroup,
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
 
--- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+-- Set filetype-specific settings
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = { 'lua', 'python' },
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+  end,
+})
 
--- Decrease update time
-vim.o.updatetime = 250
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = { 'javascript', 'typescript', 'json', 'html', 'css' },
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+  end,
+})
 
--- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+-- Auto-close terminal when process exits
+vim.api.nvim_create_autocmd('TermClose', {
+  group = augroup,
+  callback = function()
+    if vim.v.event.status == 0 then
+      vim.api.nvim_buf_delete(0, {})
+    end
+  end,
+})
 
--- Configure how new splits should be opened
-vim.o.splitright = true
-vim.o.splitbelow = true
+-- Disable line numbers in terminal
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = augroup,
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = 'no'
+  end,
+})
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
---
---  Notice listchars is set using `vim.opt` instead of `vim.o`.
---  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
---   See `:help lua-options`
---   and `:help lua-options-guide`
-vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.o.expandtab = true
--- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
+-- Auto-resize splits when window is resized
+vim.api.nvim_create_autocmd('VimResized', {
+  group = augroup,
+  callback = function()
+    vim.cmd 'tabdo wincmd ='
+  end,
+})
 
--- Show which line your cursor is on
-vim.o.cursorline = true
+-- Create directories when saving files
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = augroup,
+  callback = function()
+    local dir = vim.fn.expand '<afile>:p:h'
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, 'p')
+    end
+  end,
+})
 
--- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 16
+-- Command-line completion
+vim.opt.wildmenu = true
+vim.opt.wildmode = 'longest:full,full'
+vim.opt.wildignore:append { '*.o', '*.obj', '*.pyc', '*.class', '*.jar' }
+
+-- Better diff options
+vim.opt.diffopt:append 'linematch:60'
+
+-- Performance improvements
+vim.opt.redrawtime = 10000
+vim.opt.maxmempattern = 20000
+
+-- Create undo directory if it doesn't exist
+local undodir = vim.fn.expand '~/.vim/undodir'
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, 'p')
+end
+
+-- ============================================================================
+-- FLOATING TERMINAL
+-- ============================================================================
+
+-- terminal
+local terminal_state = {
+  buf = nil,
+  win = nil,
+  is_open = false,
+}
+
+local function FloatingTerminal()
+  -- If terminal is already open, close it (toggle behavior)
+  if terminal_state.is_open and vim.api.nvim_win_is_valid(terminal_state.win) then
+    vim.api.nvim_win_close(terminal_state.win, false)
+    terminal_state.is_open = false
+    return
+  end
+
+  -- Create buffer if it doesn't exist or is invalid
+  if not terminal_state.buf or not vim.api.nvim_buf_is_valid(terminal_state.buf) then
+    terminal_state.buf = vim.api.nvim_create_buf(false, true)
+    -- Set buffer options for better terminal experience
+    vim.api.nvim_buf_set_option(terminal_state.buf, 'bufhidden', 'hide')
+  end
+
+  -- Calculate window dimensions
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  -- Create the floating window
+  terminal_state.win = vim.api.nvim_open_win(terminal_state.buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  -- Set transparency for the floating window
+  vim.api.nvim_win_set_option(terminal_state.win, 'winblend', 0)
+
+  -- Set transparent background for the window
+  vim.api.nvim_win_set_option(terminal_state.win, 'winhighlight', 'Normal:FloatingTermNormal,FloatBorder:FloatingTermBorder')
+
+  -- Define highlight groups for transparency
+  vim.api.nvim_set_hl(0, 'FloatingTermNormal', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'FloatingTermBorder', { bg = 'none' })
+
+  -- Start terminal if not already running
+  local has_terminal = false
+  local lines = vim.api.nvim_buf_get_lines(terminal_state.buf, 0, -1, false)
+  for _, line in ipairs(lines) do
+    if line ~= '' then
+      has_terminal = true
+      break
+    end
+  end
+
+  if not has_terminal then
+    vim.fn.termopen(os.getenv 'SHELL')
+  end
+
+  terminal_state.is_open = true
+  vim.cmd 'startinsert'
+
+  -- Set up auto-close on buffer leave
+  vim.api.nvim_create_autocmd('BufLeave', {
+    buffer = terminal_state.buf,
+    callback = function()
+      if terminal_state.is_open and vim.api.nvim_win_is_valid(terminal_state.win) then
+        vim.api.nvim_win_close(terminal_state.win, false)
+        terminal_state.is_open = false
+      end
+    end,
+    once = true,
+  })
+end
+
+-- Function to explicitly close the terminal
+local function CloseFloatingTerminal()
+  if terminal_state.is_open and vim.api.nvim_win_is_valid(terminal_state.win) then
+    vim.api.nvim_win_close(terminal_state.win, false)
+    terminal_state.is_open = false
+  end
+end
+
+-- Key mappings
+vim.keymap.set('n', '<leader>t', FloatingTerminal, { noremap = true, silent = true, desc = 'Toggle floating terminal' })
+vim.keymap.set('t', '<Esc>t', function()
+  if terminal_state.is_open then
+    vim.api.nvim_win_close(terminal_state.win, false)
+    terminal_state.is_open = false
+  end
+end, { noremap = true, silent = true, desc = 'Close floating terminal from terminal mode' })
+
+-- ============================================================================
+-- TABS
+-- ============================================================================
+
+-- Tab display settings
+vim.opt.showtabline = 1 -- Always show tabline (0=never, 1=when multiple tabs, 2=always)
+vim.opt.tabline = '' -- Use default tabline (empty string uses built-in)
+
+-- Transparent tabline appearance
+vim.cmd [[
+  hi TabLineFill guibg=NONE ctermfg=242 ctermbg=NONE
+]]
+
+-- Alternative navigation (more intuitive)
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { desc = 'New tab' })
+vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { desc = 'Close tab' })
+
+-- Tab moving
+vim.keymap.set('n', '<leader>tm', ':tabmove<CR>', { desc = 'Move tab' })
+vim.keymap.set('n', '<leader>t>', ':tabmove +1<CR>', { desc = 'Move tab right' })
+vim.keymap.set('n', '<leader>t<', ':tabmove -1<CR>', { desc = 'Move tab left' })
+
+-- Function to open file in new tab
+local function open_file_in_tab()
+  vim.ui.input({ prompt = 'File to open in new tab: ', completion = 'file' }, function(input)
+    if input and input ~= '' then
+      vim.cmd('tabnew ' .. input)
+    end
+  end)
+end
+
+-- Function to duplicate current tab
+local function duplicate_tab()
+  local current_file = vim.fn.expand '%:p'
+  if current_file ~= '' then
+    vim.cmd('tabnew ' .. current_file)
+  else
+    vim.cmd 'tabnew'
+  end
+end
+
+-- Function to close tabs to the right
+local function close_tabs_right()
+  local current_tab = vim.fn.tabpagenr()
+  local last_tab = vim.fn.tabpagenr '$'
+
+  for i = last_tab, current_tab + 1, -1 do
+    vim.cmd(i .. 'tabclose')
+  end
+end
+
+-- Function to close tabs to the left
+local function close_tabs_left()
+  local current_tab = vim.fn.tabpagenr()
+
+  for i = current_tab - 1, 1, -1 do
+    vim.cmd '1tabclose'
+  end
+end
+
+-- Enhanced keybindings
+vim.keymap.set('n', '<leader>tO', open_file_in_tab, { desc = 'Open file in new tab' })
+vim.keymap.set('n', '<leader>td', duplicate_tab, { desc = 'Duplicate current tab' })
+vim.keymap.set('n', '<leader>tr', close_tabs_right, { desc = 'Close tabs to the right' })
+vim.keymap.set('n', '<leader>tL', close_tabs_left, { desc = 'Close tabs to the left' })
+
+-- Function to close buffer but keep tab if it's the only buffer in tab
+local function smart_close_buffer()
+  local buffers_in_tab = #vim.fn.tabpagebuflist()
+  if buffers_in_tab > 1 then
+    vim.cmd 'bdelete'
+  else
+    -- If it's the only buffer in tab, close the tab
+    vim.cmd 'tabclose'
+  end
+end
+vim.keymap.set('n', '<leader>bd', smart_close_buffer, { desc = 'Smart close buffer/tab' })
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -172,9 +514,6 @@ vim.opt.clipboard = 'unnamedplus'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>oq', vim.diagnostic.setloclist, { desc = '[O]pen diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>q', ':bd<CR>', { desc = '[Q]uit buffer' })
@@ -208,19 +547,61 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+local function highlight_visual_selection()
+  -- Get the current visual selection mode (e.g., 'v', 'V', 'CTRL-V')
+  local current_mode = vim.fn.mode()
+  if current_mode ~= 'v' and current_mode ~= 'V' and current_mode ~= '\22' then
+    return
+  end
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
-})
+  -- Get the start and end positions of the visual selection
+  -- '< is the start, '> is the end. getpos('.') gets the cursor position.
+  local _, ls, cs, _ = unpack(vim.fn.getpos 'v')
+  local _, le, ce, _ = unpack(vim.fn.getpos '.')
+
+  -- Ensure the start row/col is always less than the end row/col
+  if ls > le or (ls == le and cs > ce) then
+    ls, le = le, ls
+    cs, ce = ce, ce
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(0, ls - 1, le, false)
+  if #lines == 0 then
+    return
+  end
+
+  local text
+  if #lines == 1 then
+    -- Single-line selection
+    text = string.sub(lines[1], cs, ce)
+  else
+    -- Multi-line selection
+    lines[#lines] = string.sub(lines[#lines], 1, ce)
+    lines[1] = string.sub(lines[1], cs)
+    text = table.concat(lines, '\n')
+  end
+
+  if text == '' or text == '\n' then
+    return
+  end
+
+  -- Escape characters for a literal search and use the "very nomagic" atom
+  local escaped_text = vim.fn.escape(text, [[\/]])
+  local search_pattern = '\\V' .. escaped_text
+
+  -- Set the search register and enable highlighting
+  vim.fn.setreg('/', search_pattern)
+  vim.opt.hlsearch = true
+
+  -- To prevent visual mode from ending, we "re-feed" the keypress that
+  -- would normally exit it, but we consume it so it does nothing.
+  -- Then we restore the visual selection.
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'nx', false)
+  vim.cmd 'normal! gv'
+end
+
+-- Map '*' in visual mode to highlight the selection without exiting visual mode
+vim.keymap.set('v', '*', highlight_visual_selection, { desc = 'Highlight all matches of current visual selection' })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -348,9 +729,9 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>j', group = ' [J]upiter' },
-        { '<leader>n', group = ' [N]avigation (minimap)' },
-        { '<leader>o', group = ' [O]pen action' },
+        { '<leader>j', group = '[J]upiter' },
+        { '<leader>n', group = '[N]avigation (minimap)' },
+        { '<leader>o', group = '[O]pen action' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
@@ -544,6 +925,7 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
+
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
@@ -555,12 +937,12 @@ require('lazy').setup({
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gri', require('telescope.builtin').lspiimplementations, '[G]oto [I]mplementation')
+          map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('grd', require('telescope.builtin').ldp_definitions, '[G]oto [D]efinition')
+          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -678,10 +1060,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        clangd = {},
+        gopls = {},
+        pyright = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
